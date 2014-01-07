@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -18,48 +17,42 @@ import javax.ws.rs.core.Response;
 @Path("resources")
 public class RestClientMain {
 
-	private static HashMap<String, String> resourcesById = new HashMap<String, String>();
+    private static HashMap<String, String> resourcesById = new HashMap<String, String>();
 
-	public RestClientMain() {
-		resourcesById.put("Test1", "Testiusadfh1");
-		resourcesById.put("Test2", "Testsldacnsaonasdkc2");
-		resourcesById.put("otherTest", "Testsldacnsaonasdkc2");
-		for (Map.Entry<String, String> entry : resourcesById.entrySet()) {
-			addResource(entry.getKey(), entry.getValue());
-		}
-	}
+    public RestClientMain() {
+//        addResource("1", "Testiusadfh1");
+//        addResource("2", "Testsldacnsaonasdkc2");
+//        addResource("3");
+    }
 
-	@GET
-	public String getResources() {
-		List<String> resourcesIds = new ArrayList<String>();
-		resourcesIds.addAll(resourcesById.keySet());
-		StringBuilder sb = new StringBuilder();
-		for (String string : resourcesIds) {
-			sb.append("ID: " + string);
-			sb.append("\n");
-		}
-		return sb.toString();
-	}
+    @GET
+    public String getResources() {
+        List<String> resourcesIds = new ArrayList<String>();
+        resourcesIds.addAll(resourcesById.keySet());
+        StringBuilder sb = new StringBuilder();
+        for (String string : resourcesIds) {
+            sb.append("ID: " + string);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 
-	@GET
-	@Path("{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String get(@PathParam("{id}") String id) {
-		return resourcesById.get(id);
-	}
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String get(@PathParam("id") String id) {
+        System.out.println("");
+        return resourcesById.get(id);
+    }
 
-	@POST
-	@Path("{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.TEXT_PLAIN)
-	public Response addResource(@PathParam("{id}") String id, String text) {
-		String msg = "ID: " + id + "Text : " + text;
-		return Response.status(200).entity(msg).build();
-	}
-//	@PUT
-//	@Path("{text}")
-//	@Consumes(MediaType.TEXT_PLAIN)
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public static String put() {
-//	}
+    @POST
+    @Path("{id}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response addResource(@PathParam("id") String id) {
+        System.out.println("AddResource");
+        String msg = "ID: " + id + " Text : " ;
+        resourcesById.put(id, id);
+        return Response.status(200).entity(msg).build();
+    }
+
 }
